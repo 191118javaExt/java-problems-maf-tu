@@ -3,6 +3,8 @@ package com.revature.eval.java.core;
 import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EvaluationService {
 
@@ -14,8 +16,11 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
-		
-		return "";
+		String holder="";
+		for(int i=string.length()-1;i>=0;i--) {
+			holder=holder.concat(string.substring(i,i+1));//check later idk
+		}
+		return holder;
 	}
 
 	/**
@@ -27,8 +32,15 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String holder="";
+		for(int i=0;i<phrase.length();i++) {
+			if(!(phrase.substring(i,i+1).equals(" "))) {
+				if(phrase.substring(i,i+1).toUpperCase().equals(phrase.substring(i,i+1))) {
+					holder=holder+phrase.substring(i,i+1);
+				}
+			}
+		}
+		return holder;
 	}
 
 	/**
@@ -81,17 +93,35 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if(this.sideOne==this.sideTwo) {
+				if(this.sideTwo==this.sideThree) {
+					return true;
+				}
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if(this.isEquilateral()==false) {
+				if(this.sideOne==this.sideTwo) {
+					return true;
+				}
+				else if(this.sideOne==this.sideThree) {
+					return true;
+				}
+				else if(this.sideThree==this.sideTwo) {
+					return true;
+				}
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+			if(this.isIsosceles()==false) {
+				if(this.isEquilateral()==false) {
+					return true;
+				}
+			}
 			return false;
 		}
 
@@ -113,8 +143,39 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int score=0;
+		String upper=string.toUpperCase();
+		String one="AEIOULNRST";
+		String two="DG";
+		String three="BCMP";
+		String four="FHVWY";
+		String five="K";
+		String eight="JX";
+		String ten="QZ";
+		for(int i=0;i<upper.length();i++) {
+			if(one.contains(upper.substring(i, i+1))) {
+				score+=1;
+			}
+			else if(two.contains(upper.substring(i, i+1))) {
+				score+=2;
+			}
+			else if(three.contains(upper.substring(i, i+1))) {
+				score+=3;
+			}
+			else if(four.contains(upper.substring(i, i+1))) {
+				score+=4;
+			}
+			else if(five.contains(upper.substring(i, i+1))) {
+				score+=5;
+			}
+			else if(eight.contains(upper.substring(i, i+1))) {
+				score+=8;
+			}
+			else if(ten.contains(upper.substring(i, i+1))) {
+				score+=10;
+			}
+		}
+		return score;
 	}
 
 	/**
@@ -149,8 +210,15 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Pattern p=Pattern.compile("(\\d{3})\\D*(\\d{3})\\D*(\\d{4})");
+		Matcher m=p.matcher(string);
+		if(m.find()==true) {
+			String ans=m.group(1)+m.group(2)+m.group(3);
+			return ans;
+		}
+		else {
+			return null;
+		}
 	}
 
 	/**
@@ -163,7 +231,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
+		
 		return null;
 	}
 
